@@ -20,5 +20,18 @@ namespace webapi.Controllers
             };
             return Ok(products);
         }
+        [HttpGet]
+        public IActionResult GetProductByID()
+        {
+            // This is a placeholder for actual product retrieval logic.
+            // In a real application, you would typically retrieve products from a database.
+            var products = new[]
+            {
+                new { Id = 1, Name = "Product 1", Price = 10.99 },
+                new { Id = 2, Name = "Product 2", Price = 15.49 },
+                new { Id = 3, Name = "Product 3", Price = 7.99 }
+            };
+            return Ok(products);
+        }
     }
 }
