@@ -27,7 +27,7 @@ namespace webapi.Controllers
             // In a real application, you would typically retrieve products from a database.
             var products = new[]
             {
-                new { Id = 1, Name = "Product 1", Price = 10.99 },
+                new { Id = 1, Name = "Product 4", Price = 10.99 },
                 new { Id = 2, Name = "Product 2", Price = 15.49 },
                 new { Id = 3, Name = "Product 3", Price = 7.99 }
             };
