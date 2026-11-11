@@ -35,11 +35,7 @@ namespace Application.Services
                 throw new InvalidOperationException(
                     $"A product with SKU '{sku}' already exists.");
 
-            var product = new Product(
-                request.Name,
-                sku,
-                request.Price,
-                request.Description);
+            var product = new Product(request.Name,sku,request.Price,request.Description);
 
             await _productRepository.AddAsync(product, cancellationToken);
             await _productRepository.SaveChangesAsync(cancellationToken);
@@ -47,9 +43,7 @@ namespace Application.Services
             return MapToResponse(product);
         }
 
-        public async Task<ProductResponse> GetByIdAsync(
-            int id,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductResponse> GetByIdAsync(int id,CancellationToken cancellationToken = default)
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
@@ -64,9 +58,7 @@ namespace Application.Services
             return MapToResponse(product);
         }
 
-        public async Task<PagedResult<ProductResponse>> GetPagedAsync(
-            ProductListRequest request,
-            CancellationToken cancellationToken = default)
+        public async Task<PagedResult<ProductResponse>> GetPagedAsync(ProductListRequest request,CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(request);
 
@@ -101,10 +93,7 @@ namespace Application.Services
             };
         }
 
-        public async Task<ProductResponse> UpdateAsync(
-            int id,
-            UpdateProductRequest request,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductResponse> UpdateAsync(int id,UpdateProductRequest request,CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(request);
 
@@ -121,20 +110,14 @@ namespace Application.Services
                     $"A product with SKU '{sku}' already exists.");
             }
 
-            product.UpdateDetails(
-                request.Name,
-                sku,
-                request.Description);
+            product.UpdateDetails(request.Name,sku,request.Description);
 
             await _productRepository.SaveChangesAsync(cancellationToken);
 
             return MapToResponse(product);
         }
 
-        public async Task<ProductResponse> ChangePriceAsync(
-            int id,
-            decimal newPrice,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductResponse> ChangePriceAsync(int id,decimal newPrice,CancellationToken cancellationToken = default)
         {
             var product = await GetTrackedProductAsync(id, cancellationToken);
 
@@ -145,10 +128,7 @@ namespace Application.Services
             return MapToResponse(product);
         }
 
-        public async Task SetActiveAsync(
-            int id,
-            bool isActive,
-            CancellationToken cancellationToken = default)
+        public async Task SetActiveAsync(int id,bool isActive,CancellationToken cancellationToken = default)
         {
             var product = await GetTrackedProductAsync(id, cancellationToken);
 
@@ -160,9 +140,7 @@ namespace Application.Services
             await _productRepository.SaveChangesAsync(cancellationToken);
         }
 
-        private async Task<Product> GetTrackedProductAsync(
-            int id,
-            CancellationToken cancellationToken)
+        private async Task<Product> GetTrackedProductAsync(int id,CancellationToken cancellationToken)
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id));

@@ -30,11 +30,7 @@ namespace Domain.Entities
         {
         }
 
-        public Product(
-            string name,
-            string sku,
-            decimal price,
-            string? description = null)
+        public Product(string name,string sku,decimal price,string? description = null)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException(
@@ -55,10 +51,7 @@ namespace Domain.Entities
             CreatedAtUtc = DateTime.UtcNow;
         }
 
-        public void UpdateDetails(
-            string name,
-            string sku,
-            string? description)
+        public void UpdateDetails(string name,string sku,string? description)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException(
