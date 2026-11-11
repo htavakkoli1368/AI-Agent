@@ -20,9 +20,7 @@ namespace Application.Services
             _productRepository = productRepository;
         }
 
-        public async Task<ProductResponse> CreateAsync(
-            CreateProductRequest request,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductResponse> CreateAsync(CreateProductRequest request,CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(request);
 

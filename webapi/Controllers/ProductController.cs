@@ -15,23 +15,70 @@ namespace webapi.Controllers
             _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]ProductListRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProducts([FromQuery]ProductListRequest request)
         {
             var products = await _productService.GetPagedAsync(request);
             return Ok(products);
         }
-        [HttpGet]
-        public IActionResult GetProductByID()
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetProduct(int id)
         {
-            // This is a placeholder for actual product retrieval logic.
-            // In a real application, you would typically retrieve products from a database.
-            var products = new[]
+            try
             {
-                new { Id = 1, Name = "Product 4", Price = 10.99 },
-                new { Id = 2, Name = "Product 2", Price = 15.49 },
-                new { Id = 3, Name = "Product 3", Price = 7.99 }
-            };
-            return Ok(products);
+                var product = await _productService.GetByIdAsync(id);
+
+                return Ok(product);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new
+                {
+                    message = "Product was not found."
+                });
+            }
+        }
+        // POST: api/products
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request)
+        {
+            try
+            {
+                var product = await _productService.CreateAsync(request);
+
+                return CreatedAtAction(nameof(GetProduct), new { id = product.Id },product);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+        // PUT: api/products/{id}
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProduct(int id,[FromBody] UpdateProductRequest request)
+        {
+            try
+            {
+                var product = await _productService.UpdateAsync(id, request);
+
+                return Ok(product);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new
+                {
+                    message = "Product was not found."
+                });
+            }
         }
     }
 }

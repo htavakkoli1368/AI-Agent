@@ -55,12 +55,15 @@ namespace Infrastructure.Repository
         {
             var query = _context.Products.AsNoTracking();
             if (!string.IsNullOrWhiteSpace(search))
-            search = search.Trim();
-            query = query.Where(
-                    p => p.Name.Contains(search)
-                    || p.Sku.Contains(search)
-                    || (p.Description != null && p.Description.Contains(search))
-                    );
+            {
+                search = search.Trim();
+                query = query.Where(
+                        p => p.Name.Contains(search)
+                        || p.Sku.Contains(search)
+                        || (p.Description != null && p.Description.Contains(search))
+                        );
+            }
+           
             return  await query.OrderBy(p =>p.Name)
                                .Skip((page - 1) * pageSize)
                                .Take(pageSize)
