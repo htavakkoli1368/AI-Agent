@@ -21,8 +21,7 @@ namespace Domain.Entities
         // Navigation property
         public Product Product { get; private set; } = null!;
 
-        public int AvailableQuantity =>
-            QuantityOnHand - QuantityReserved;
+        public int AvailableQuantity => QuantityOnHand - QuantityReserved;
 
         // Required by EF Core
         private Inventory()
