@@ -31,7 +31,7 @@ namespace webapi.Controllers
             return Ok(result);
         }
         // POST: api/inventory/5/adjust
-        [HttpPost("{productId:int}/adjust")]
+        [HttpPost("{productId:intd}/adjust")]
         public async Task<IActionResult> AdjustStock(int productId,[FromBody] AdjustInventoryRequest request,CancellationToken cancellationToken)
         {
             try
