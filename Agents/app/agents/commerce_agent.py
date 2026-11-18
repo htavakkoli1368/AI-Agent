@@ -1,6 +1,8 @@
 from agents import Agent
+from app.agents.inventory_agent import inventory_agent
+from app.agents.product_agent import product_agent
 
-commerce_agent = Agent(
+commerce_agent = Agent (
     name="Commerce Agent",
     instructions="""
           You are a helpful commerce assistant.
@@ -17,6 +19,7 @@ commerce_agent = Agent(
       you have verified it using the available tools.
     - If you don't know something, say so honestly.
 
-     """
-     )
+     """,
+    handoffs= [product_agent, inventory_agent] 
+    )
  
